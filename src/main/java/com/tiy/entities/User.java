@@ -1,9 +1,8 @@
 package com.tiy.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by dbash on 2/9/2017.
@@ -16,6 +15,23 @@ public class User {
     private Long id;
     private String emailAddress;
     private String fullName;
+    @ManyToMany(cascade =
+            {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "User_BlogPost",
+            joinColumns = {
+                    @JoinColumn(
+                            name = "user_id",
+                            referencedColumnName = "id"
+                    )
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(
+                            name = "blog_post_id",
+                            referencedColumnName = "id"
+                    )
+            }
+    )
+    private List<BlogPost> blogPosts = new ArrayList<BlogPost>();
 
     public User() {
     }
@@ -23,6 +39,19 @@ public class User {
     public User(String emailAddress, String fullName) {
         this.emailAddress = emailAddress;
         this.fullName = fullName;
+    }
+
+    public void addBlogPost(BlogPost blogPost) {
+        blogPosts.add(blogPost);
+        blogPost.addUser(this);
+    }
+
+    public List<BlogPost> getBlogPosts() {
+        return blogPosts;
+    }
+
+    public void setBlogPosts(List<BlogPost> blogPosts) {
+        this.blogPosts = blogPosts;
     }
 
     public Long getId() {

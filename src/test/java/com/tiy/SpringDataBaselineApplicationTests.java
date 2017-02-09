@@ -3,9 +3,11 @@ package com.tiy;
 import com.tiy.entities.BlogPost;
 import com.tiy.entities.BlogPostText;
 import com.tiy.entities.PostComment;
+import com.tiy.entities.User;
 import com.tiy.repos.BlogPostRepo;
 import com.tiy.repos.BlogPostTextRepo;
 import com.tiy.repos.PostCommentRepo;
+import com.tiy.repos.UserRepo;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,8 @@ public class SpringDataBaselineApplicationTests {
 	private BlogPostTextRepo blogPostTextRepo;
 	@Autowired
 	private PostCommentRepo postCommentRepo;
+	@Autowired
+	private UserRepo userRepo;
 
 	@Test
 	public void contextLoads() {
@@ -78,7 +82,8 @@ public class SpringDataBaselineApplicationTests {
 		// First - from the blog post
 		blogPost.setBlogPostText(blogPostText);
 		// Second - from the blog post text
-		blogPostText.setBlogPost(blogPost);
+//		blogPostText.setBlogPost(blogPost); <---- no longer necessary because it's done inside of
+		// the setBlogPostText() method
 		long numTextsBefore = blogPostTextRepo.count();
 
 		// because we cascade, we just need to save the
@@ -132,8 +137,11 @@ public class SpringDataBaselineApplicationTests {
 	public void testBlogPostWithComments() {
 		BlogPost blogPost = new BlogPost();
 		PostComment postComment = new PostComment("comment on a blog post for testing one-to-many relationship");
-		blogPost.getPostComments().add(postComment);
-		postComment.setBlogPost(blogPost);
+		// using the addPostComment() method instead of adding directly
+		// to the collection, so that we don't have to manually set the other
+		// side of the relationship (see addPostComemnt() method in BlogPost for more info
+		blogPost.addPostComment(postComment);
+//		postComment.setBlogPost(blogPost); ^----------- see comment above - not required anymore
 		long numCommentsBefore = postCommentRepo.count();
 
 		blogPostRepo.save(blogPost);
@@ -155,7 +163,7 @@ public class SpringDataBaselineApplicationTests {
 		// Add a second comment
 		PostComment secondComment = new PostComment("second test comment");
 		secondComment.setBlogPost(blogPost);
-		blogPost.getPostComments().add(secondComment);
+		blogPost.addPostComment(secondComment);
 
 		// Note that adding an entity that was never saved to the database
 		// to an entity that already exists in the database
@@ -184,4 +192,24 @@ public class SpringDataBaselineApplicationTests {
 		assertEquals(numCommentsBefore, numCommentsAfter);
 	}
 
+	@Test
+	public void testSimpleUser() {
+		User user = new User("test@tiy.com", "Test Tester");
+		long numUsersBefore = userRepo.count();
+		userRepo.save(user);
+
+		long numUsersAfter = userRepo.count();
+		assertNotNull(user.getId());
+		assertEquals(numUsersBefore+1, numUsersAfter);
+
+		userRepo.delete(user);
+		numUsersAfter = userRepo.count();
+		assertEquals(numUsersBefore, numUsersAfter);
+	}
+
+	@Test
+	public void testBlogPostWithUser() {
+		User user = new User("test@tiy.com", "Test Tester");
+		BlogPost blogPost = new BlogPost();
+	}
 }

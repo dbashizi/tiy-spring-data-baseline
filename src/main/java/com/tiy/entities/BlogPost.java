@@ -26,15 +26,35 @@ public class BlogPost {
                fetch = FetchType.EAGER)
     private List<PostComment> postComments = new ArrayList<>();
 
+    @ManyToMany(mappedBy = "blogPosts",
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<User> users = new ArrayList<User>();
+
+    public void addUser(User user) {
+        users.add(user);
+        user.addBlogPost(this);
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+
     public List<PostComment> getPostComments() {
-        if (postComments == null) {
-            postComments = new ArrayList<PostComment>();
-        }
         return postComments;
     }
 
     public void setPostComments(List<PostComment> postComments) {
         this.postComments = postComments;
+    }
+
+    public void addPostComment(PostComment postComment) {
+        postComments.add(postComment);
+        // ensure the bi-directional aspect of the relationship here
+        postComment.setBlogPost(this);
     }
 
     public BlogPostText getBlogPostText() {
@@ -43,6 +63,8 @@ public class BlogPost {
 
     public void setBlogPostText(BlogPostText blogPostText) {
         this.blogPostText = blogPostText;
+        // set the reverse for the bi-directional relationship
+        blogPostText.setBlogPost(this);
     }
 
     public Long getId() {
