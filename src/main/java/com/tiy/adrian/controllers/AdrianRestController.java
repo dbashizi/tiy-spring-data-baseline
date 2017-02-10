@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * Created by dbash on 2/10/2017.
@@ -32,6 +33,11 @@ public class AdrianRestController {
     @RequestMapping(path = "/register-organization.json", method = RequestMethod.POST)
     public OrganizationResponse registerOrganization(HttpSession session, @RequestBody RegistrationRequestOrganization registrationRequestOrganization) {
         return OrganizationResponse.createTestOrganizationResponse();
+    }
+
+    @RequestMapping(path = "/event-list.json", method = RequestMethod.GET)
+    public List<Event> eventList(HttpSession session) {
+        return Event.createTestEvents(); 
     }
 
 }
