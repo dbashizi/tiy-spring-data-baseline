@@ -1,9 +1,6 @@
 package com.tiy.adrian.controllers;
 
-import com.tiy.adrian.model.Individual;
-import com.tiy.adrian.model.IndividualResponse;
-import com.tiy.adrian.model.LoginRequest;
-import com.tiy.adrian.model.OrganizationResponse;
+import com.tiy.adrian.model.*;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,8 +19,19 @@ public class AdrianRestController {
         return IndividualResponse.createTestIndividualResponse();
     }
 
+    @RequestMapping(path = "/register-individual.json", method = RequestMethod.POST)
+    public IndividualResponse registerIndividual(HttpSession session, @RequestBody RegistrationRequestIndividual registrationRequestIndividual) {
+        return IndividualResponse.createTestIndividualResponse();
+    }
+
     @RequestMapping(path = "/login-organization.json", method = RequestMethod.POST)
     public OrganizationResponse loginOrganization(HttpSession session, @RequestBody LoginRequest loginRequest) {
         return OrganizationResponse.createTestOrganizationResponse();
     }
+
+    @RequestMapping(path = "/register-organization.json", method = RequestMethod.POST)
+    public OrganizationResponse registerOrganization(HttpSession session, @RequestBody RegistrationRequestOrganization registrationRequestOrganization) {
+        return OrganizationResponse.createTestOrganizationResponse();
+    }
+
 }
