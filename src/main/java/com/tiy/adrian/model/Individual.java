@@ -21,7 +21,7 @@ public class Individual {
         return individual;
     }
 
-    public Individual(long userId, String email, String password, long hostId, String firstName, String lastName, List<Long> eventIds) {
+    public Individual(Long userId, String email, String password, Long hostId, String firstName, String lastName, List<Long> eventIds) {
         this.userId = userId;
         this.email = email;
         this.password = password;
@@ -32,6 +32,14 @@ public class Individual {
     }
 
     public Individual() {
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public void setHostId(Long hostId) {
+        this.hostId = hostId;
     }
 
     public void addEventId(Long eventId) {

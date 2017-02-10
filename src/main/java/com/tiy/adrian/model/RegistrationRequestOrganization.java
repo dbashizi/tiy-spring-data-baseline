@@ -11,7 +11,6 @@ public class RegistrationRequestOrganization {
     private String city;
     private String state;
     private Integer zip;
-    private String userName;
 
     public RegistrationRequestOrganization() {
     }
@@ -70,13 +69,5 @@ public class RegistrationRequestOrganization {
 
     public void setZip(Integer zip) {
         this.zip = zip;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
     }
 }
