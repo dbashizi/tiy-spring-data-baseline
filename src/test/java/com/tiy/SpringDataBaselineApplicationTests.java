@@ -210,6 +210,49 @@ public class SpringDataBaselineApplicationTests {
 	@Test
 	public void testBlogPostWithUser() {
 		User user = new User("test@tiy.com", "Test Tester");
+		long numBlogPostsBefore = blogPostRepo.count();
+		long numUsersBefore = userRepo.count();
 		BlogPost blogPost = new BlogPost();
+		blogPost.addUser(user);
+
+		blogPostRepo.save(blogPost);
+		long numBlogPostsAfter = blogPostRepo.count();
+		long numUsersAfter = userRepo.count();
+		assertNotNull(blogPost.getId());
+		assertNotNull(user.getId());
+		assertEquals(numBlogPostsBefore+1, numBlogPostsAfter);
+		assertEquals(numUsersBefore+1, numUsersAfter);
+		assertNotNull(blogPost.getUsers());
+		assertEquals(1, blogPost.getUsers().size());
+		assertEquals(user.getId(), blogPost.getUsers().get(0).getId());
+
+		// add another blog post to the user
+		BlogPost secondPost = new BlogPost();
+		user.addBlogPost(secondPost);
+		userRepo.save(user);
+
+		numBlogPostsAfter = blogPostRepo.count();
+		assertEquals(numBlogPostsBefore+2, numBlogPostsAfter);
+
+		// add another user to the first blog post (let's pretend each user is a co-author
+		// to make this make sense)
+		User secondUser = new User("test2@tiy.com", "Test2 Tester");
+		blogPost.addUser(secondUser);
+		blogPostRepo.save(blogPost);
+		numUsersAfter = userRepo.count();
+		assertEquals(numUsersBefore+2, numUsersAfter);
+
+		blogPost.removeUserBiDirectional(user);
+		blogPost.removeUserBiDirectional(secondUser);
+		blogPostRepo.save(blogPost);
+		blogPostRepo.delete(blogPost);
+		secondPost.removeUserBiDirectional(user);
+		blogPostRepo.save(secondPost);
+		blogPostRepo.delete(secondPost);
+		numBlogPostsAfter = blogPostRepo.count();
+		assertEquals(numBlogPostsBefore, numBlogPostsAfter);
+		userRepo.delete(user);
+		numUsersAfter = userRepo.count();
+		assertEquals(numUsersBefore, numUsersAfter);
 	}
 }

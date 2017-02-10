@@ -43,7 +43,20 @@ public class User {
 
     public void addBlogPost(BlogPost blogPost) {
         blogPosts.add(blogPost);
+    }
+
+    public void addBlogPostBiDirectional(BlogPost blogPost) {
+        blogPosts.add(blogPost);
         blogPost.addUser(this);
+    }
+
+    public void removeBlogPost(BlogPost blogPost) {
+        blogPosts.remove(blogPost);
+    }
+
+    public void removeBlogPostBiDirectional(BlogPost blogPost) {
+        blogPosts.remove(blogPost);
+        blogPost.removeUser(this);
     }
 
     public List<BlogPost> getBlogPosts() {
