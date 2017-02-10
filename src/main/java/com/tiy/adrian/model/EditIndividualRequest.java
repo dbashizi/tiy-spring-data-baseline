@@ -1,23 +1,38 @@
 package com.tiy.adrian.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by dbash on 2/10/2017.
  */
-public class RegistrationRequestIndividual {
+public class EditIndividualRequest {
     private Long userId;
     private String email;
     private String password;
     private String firstName;
     private String lastName;
 
-    public RegistrationRequestIndividual() {
+    public EditIndividualRequest(Long userId, String email, String password, String firstName, String lastName) {
+        this.userId = userId;
+        this.email = email;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
-    public Long getUserId() {
-        return userId;
+    public EditIndividualRequest() {
     }
 
     public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 
@@ -52,4 +67,6 @@ public class RegistrationRequestIndividual {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
 }
+
