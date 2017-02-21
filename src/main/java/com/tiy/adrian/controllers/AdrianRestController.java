@@ -42,14 +42,7 @@ public class AdrianRestController {
 
     @RequestMapping(path = "/event-list.json", method = RequestMethod.GET)
     public List<Event> eventList(HttpSession session) {
-        List<Event> events = Event.createTestEvents();
-        System.out.println(events.get(0).getStartTime().getTime());
-        for (Event event : events) {
-            System.out.println("Adding " + event.getName() + " to the database");
-            eventRepo.save(event);
-        }
         return eventRepo.findAll();
-//        return events;
     }
 
     @RequestMapping(path = "/join-event.json", method = RequestMethod.POST)
@@ -64,7 +57,9 @@ public class AdrianRestController {
 
     @RequestMapping(path = "/create-event.json", method = RequestMethod.POST)
     public EventResponse createEvent(HttpSession session, @RequestBody Event event) {
-        return EventResponse.creasteTestEventResponse();
+//        return EventResponse.creasteTestEventResponse();
+        eventRepo.save(event);
+        return EventResponse.createEventResponse(eventRepo.findAll());
     }
 
     @RequestMapping(path = "/edit-event.json", method = RequestMethod.POST)

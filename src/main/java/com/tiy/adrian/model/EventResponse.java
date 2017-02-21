@@ -19,6 +19,12 @@ public class EventResponse {
     public EventResponse() {
     }
 
+    public static EventResponse createEventResponse(List<Event> events) {
+        EventResponse response = new EventResponse();
+        response.setEvents(events);
+        return response;
+    }
+
     public ErrorInformation getErrorInformation() {
         return errorInformation;
     }
