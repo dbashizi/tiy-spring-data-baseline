@@ -4,25 +4,25 @@ package com.tiy.adrian.model;
  * Created by dbash on 2/10/2017.
  */
 public class EventRequest {
-    private Long userId;
-    private Long eventId;
+    private String userId;
+    private String eventId;
 
     public EventRequest() {
     }
 
-    public Long getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
-    public Long getEventId() {
+    public String getEventId() {
         return eventId;
     }
 
-    public void setEventId(Long eventId) {
+    public void setEventId(String eventId) {
         this.eventId = eventId;
     }
 }

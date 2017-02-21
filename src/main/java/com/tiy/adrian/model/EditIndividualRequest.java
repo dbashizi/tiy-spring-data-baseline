@@ -1,19 +1,16 @@
 package com.tiy.adrian.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by dbash on 2/10/2017.
  */
 public class EditIndividualRequest {
-    private Long userId;
+    private String userId;
     private String email;
     private String password;
     private String firstName;
     private String lastName;
 
-    public EditIndividualRequest(Long userId, String email, String password, String firstName, String lastName) {
+    public EditIndividualRequest(String userId, String email, String password, String firstName, String lastName) {
         this.userId = userId;
         this.email = email;
         this.password = password;
@@ -24,15 +21,11 @@ public class EditIndividualRequest {
     public EditIndividualRequest() {
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public long getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(long userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

@@ -11,6 +11,12 @@ public class IndividualResponse {
     private List<Event> events = new ArrayList<Event>();
     private ErrorInformation errorInformation;
 
+    public static IndividualResponse createErrorIndividualResponse(String errorMessage, int errorNumber) {
+        IndividualResponse response = new IndividualResponse();
+        response.setErrorInformation(new ErrorInformation(errorMessage, errorNumber));
+        return response;
+    }
+
     public static IndividualResponse createTestIndividualResponse() {
         IndividualResponse individualResponse = new IndividualResponse();
         individualResponse.setEvents(Event.createTestEvents());
@@ -20,6 +26,14 @@ public class IndividualResponse {
     }
 
     public IndividualResponse() {
+    }
+
+    public static IndividualResponse createIndividualResponse(Individual individual, List<Event> events) {
+        IndividualResponse response = new IndividualResponse();
+        response.setIndividual(individual);
+        response.setEvents(events);
+
+        return response;
     }
 
     public ErrorInformation getErrorInformation() {

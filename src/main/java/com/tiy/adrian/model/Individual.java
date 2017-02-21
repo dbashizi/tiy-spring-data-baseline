@@ -1,8 +1,5 @@
 package com.tiy.adrian.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,24 +8,23 @@ import java.util.List;
  */
 //@Entity
 public class Individual {
-    @Id
-    @GeneratedValue
-    private Long userId;
+    private String id;
+    private String userId;
     private String email;
     private String password;
     private Long hostId;
     private String firstName;
     private String lastName;
-    private List<Long> eventIds = new ArrayList<Long>();
+    private List<String> eventIds = new ArrayList<>();
 
     public static Individual createTestIndividual() {
         List<Event> events = Event.createTestEvents();
-        Individual individual = new Individual(777L, "dominique@theironyard.com", "testpassword", 111L, "Dominique", "Bashizi", Event.getTestEventIds());
+        Individual individual = new Individual("777", "dominique@theironyard.com", "testpassword", 111L, "Dominique", "Bashizi", Event.getTestEventIds());
         return individual;
     }
 
-    public Individual(Long userId, String email, String password, Long hostId, String firstName, String lastName, List<Long> eventIds) {
-        this.userId = userId;
+    public Individual(String id, String email, String password, Long hostId, String firstName, String lastName, List<String> eventIds) {
+        this.id = id;
         this.email = email;
         this.password = password;
         this.hostId = hostId;
@@ -40,7 +36,11 @@ public class Individual {
     public Individual() {
     }
 
-    public void setUserId(Long userId) {
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
@@ -48,7 +48,7 @@ public class Individual {
         this.hostId = hostId;
     }
 
-    public void addEventId(Long eventId) {
+    public void addEventId(String eventId) {
         eventIds.add(eventId);
     }
 
@@ -56,12 +56,12 @@ public class Individual {
         eventIds.remove(eventId);
     }
 
-    public long getUserId() {
-        return userId;
+    public String getId() {
+        return id;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getEmail() {
@@ -80,12 +80,8 @@ public class Individual {
         this.password = password;
     }
 
-    public long getHostId() {
+    public Long getHostId() {
         return hostId;
-    }
-
-    public void setHostId(long hostId) {
-        this.hostId = hostId;
     }
 
     public String getFirstName() {
@@ -104,11 +100,11 @@ public class Individual {
         this.lastName = lastName;
     }
 
-    public List<Long> getEventIds() {
+    public List<String> getEventIds() {
         return eventIds;
     }
 
-    public void setEventIds(List<Long> eventIds) {
+    public void setEventIds(List<String> eventIds) {
         this.eventIds = eventIds;
     }
 }

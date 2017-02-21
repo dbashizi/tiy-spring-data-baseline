@@ -7,6 +7,11 @@ public class ErrorInformation {
     private String errorMessage;
     private Integer errorCode;
 
+    public ErrorInformation(String errorMessage, Integer errorCode) {
+        this.errorMessage = errorMessage;
+        this.errorCode = errorCode;
+    }
+
     public ErrorInformation() {
     }
 

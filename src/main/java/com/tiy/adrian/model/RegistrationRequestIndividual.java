@@ -4,7 +4,7 @@ package com.tiy.adrian.model;
  * Created by dbash on 2/10/2017.
  */
 public class RegistrationRequestIndividual {
-    private Long userId;
+    private String userId;
     private String email;
     private String password;
     private String firstName;
@@ -13,11 +13,11 @@ public class RegistrationRequestIndividual {
     public RegistrationRequestIndividual() {
     }
 
-    public Long getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

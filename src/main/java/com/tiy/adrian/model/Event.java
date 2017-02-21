@@ -1,8 +1,5 @@
 package com.tiy.adrian.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -12,9 +9,8 @@ import java.util.List;
  */
 //@Entity
 public class Event {
-    @Id
-    @GeneratedValue
-    private Long eventId;
+    private String id;
+    private String eventId;
     private String name;
     private String type;
     private String host;
@@ -28,16 +24,16 @@ public class Event {
     private Date startTime;
     private Date endTime;
     private String details;
-    private List<Long> userIds = new ArrayList<Long>();
+    private List<String> userIds = new ArrayList<>();
 
     public static List<Event> createTestEvents() {
-        List<Long> testUserIds = new ArrayList<Long>();
-        testUserIds.add(777L);
-        testUserIds.add(888L);
-        testUserIds.add(999L);
-        Event firstEvent = new Event(111L, "HC Event 1", "TEST_TYPE_1", "Test Host 1", 444L, null, "Test Location 1", "Test Address 1", "Atlanta", "GA", 30004, new Date(), new Date(), "Test Details 1", testUserIds);
-        Event secondEvent = new Event(222L, "HC Event 2", "TEST_TYPE_1", "Test Host 1", 444L, null, "Test Location 2", "Test Address 2", "Atlanta", "GA", 30004, new Date(), new Date(), "Test Details 2", testUserIds);
-        Event thirdEvent = new Event(222L, "HC Event 3", "TEST_TYPE_1", "Test Host 2", 555L, null, "Test Location 3", "Test Address 3", "Atlanta", "GA", 30004, new Date(), new Date(), "Test Details 3", testUserIds);
+        List<String> testUserIds = new ArrayList<>();
+        testUserIds.add("777");
+        testUserIds.add("888");
+        testUserIds.add("999");
+        Event firstEvent = new Event("111", "HC Event 1", "TEST_TYPE_1", "Test Host 1", 444L, null, "Test Location 1", "Test Address 1", "Atlanta", "GA", 30004, new Date(), new Date(), "Test Details 1", testUserIds);
+        Event secondEvent = new Event("222", "HC Event 2", "TEST_TYPE_1", "Test Host 1", 444L, null, "Test Location 2", "Test Address 2", "Atlanta", "GA", 30004, new Date(), new Date(), "Test Details 2", testUserIds);
+        Event thirdEvent = new Event("222", "HC Event 3", "TEST_TYPE_1", "Test Host 2", 555L, null, "Test Location 3", "Test Address 3", "Atlanta", "GA", 30004, new Date(), new Date(), "Test Details 3", testUserIds);
         List<Event> events = new ArrayList<Event>();
         events.add(firstEvent);
         events.add(secondEvent);
@@ -45,18 +41,30 @@ public class Event {
         return events;
     }
 
-    public static List<Long> getTestEventIds() {
+    public static List<String> getTestEventIds() {
         List<Event> events = createTestEvents();
-        List<Long> eventIds = new ArrayList<Long>();
+        List<String> eventIds = new ArrayList<>();
         for (Event event : events) {
-            eventIds.add(event.getEventId());
+            eventIds.add(event.getId());
         }
 
         return eventIds;
     }
 
-    public Event(Long eventId, String name, String type, String host, Long hostId, String photo, String location, String address, String city, String state, Integer zip, Date startTime, Date endTime, String details, List<Long> userIds) {
+    public void addUserId(String userId) {
+        userIds.add(userId);
+    }
+
+    public String getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(String eventId) {
         this.eventId = eventId;
+    }
+
+    public Event(String id, String name, String type, String host, Long hostId, String photo, String location, String address, String city, String state, Integer zip, Date startTime, Date endTime, String details, List<String> userIds) {
+        this.id = id;
         this.name = name;
         this.type = type;
         this.host = host;
@@ -77,12 +85,12 @@ public class Event {
 
     }
 
-    public Long getEventId() {
-        return eventId;
+    public String getId() {
+        return id;
     }
 
-    public void setEventId(Long eventId) {
-        this.eventId = eventId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -189,11 +197,11 @@ public class Event {
         this.details = details;
     }
 
-    public List<Long> getUserIds() {
+    public List<String> getUserIds() {
         return userIds;
     }
 
-    public void setUserIds(List<Long> userIds) {
+    public void setUserIds(List<String> userIds) {
         this.userIds = userIds;
     }
 }

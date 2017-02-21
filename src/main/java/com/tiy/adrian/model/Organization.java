@@ -1,8 +1,5 @@
 package com.tiy.adrian.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,9 +8,8 @@ import java.util.List;
  */
 //@Entity
 public class Organization {
-    @Id
-    @GeneratedValue
-    private Long userId;
+    private String id;
+    private String userId;
     private String email;
     private String password;
     private Long hostId;
@@ -22,18 +18,18 @@ public class Organization {
     private String city;
     private String state;
     private Integer zip;
-    private List<Long> eventIds = new ArrayList<Long>();
+    private List<String> eventIds = new ArrayList<String>();
 
     public static Organization createTestOrganization() {
-        Organization organization = new Organization(121L, "organization1@theironyard.com", "testpassword", 444L, "Test Organization 1", "Test Address", "Atlanta", "GA", 30004, Event.getTestEventIds());
+        Organization organization = new Organization("121", "organization1@theironyard.com", "testpassword", 444L, "Test Organization 1", "Test Address", "Atlanta", "GA", 30004, Event.getTestEventIds());
         return organization;
     }
 
     public Organization() {
     }
 
-    public Organization(Long userId, String email, String password, Long hostId, String name, String address, String city, String state, Integer zip, List<Long> eventIds) {
-        this.userId = userId;
+    public Organization(String id, String email, String password, Long hostId, String name, String address, String city, String state, Integer zip, List<String> eventIds) {
+        this.id = id;
         this.email = email;
         this.password = password;
         this.hostId = hostId;
@@ -45,12 +41,20 @@ public class Organization {
         this.eventIds = eventIds;
     }
 
-    public Long getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getEmail() {
@@ -117,11 +121,11 @@ public class Organization {
         this.zip = zip;
     }
 
-    public List<Long> getEventIds() {
+    public List<String> getEventIds() {
         return eventIds;
     }
 
-    public void setEventIds(List<Long> eventIds) {
+    public void setEventIds(List<String> eventIds) {
         this.eventIds = eventIds;
     }
 }

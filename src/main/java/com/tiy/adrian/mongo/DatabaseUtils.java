@@ -4,9 +4,6 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.tiy.adrian.model.Event;
 
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * Created by dbash on 2/13/2017.
  */
@@ -14,7 +11,7 @@ public class DatabaseUtils {
     public static final String DB_CONNECTION_URL = "mongodb://localhost:27017";
 
     public static final DBObject toDBOjbect(Event event) {
-        return new BasicDBObject("eventId", event.getEventId())
+        return new BasicDBObject("eventId", event.getId())
                 .append("name", event.getName())
                 .append("type", event.getType())
                 .append("host", event.getHost())
