@@ -1,5 +1,8 @@
 package com.tiy.adrian.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -7,7 +10,10 @@ import java.util.List;
 /**
  * Created by dbash on 2/10/2017.
  */
+//@Entity
 public class Event {
+    @Id
+    @GeneratedValue
     private Long eventId;
     private String name;
     private String type;

@@ -1,6 +1,8 @@
 package com.tiy.adrian.controllers;
 
 import com.tiy.adrian.model.*;
+import com.tiy.adrian.repos.EventRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,6 +16,9 @@ import java.util.List;
  */
 @RestController
 public class AdrianRestController {
+
+    @Autowired
+    private EventRepo eventRepo;
 
     @RequestMapping(path = "/login-individual.json", method = RequestMethod.POST)
     public IndividualResponse loginIndividual(HttpSession session, @RequestBody LoginRequest loginRequest) {
@@ -37,7 +42,14 @@ public class AdrianRestController {
 
     @RequestMapping(path = "/event-list.json", method = RequestMethod.GET)
     public List<Event> eventList(HttpSession session) {
-        return Event.createTestEvents();
+        List<Event> events = Event.createTestEvents();
+        System.out.println(events.get(0).getStartTime().getTime());
+        for (Event event : events) {
+            System.out.println("Adding " + event.getName() + " to the database");
+            eventRepo.save(event);
+        }
+        return eventRepo.findAll();
+//        return events;
     }
 
     @RequestMapping(path = "/join-event.json", method = RequestMethod.POST)
