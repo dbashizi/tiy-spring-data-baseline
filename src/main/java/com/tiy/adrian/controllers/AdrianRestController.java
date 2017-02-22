@@ -97,10 +97,10 @@ public class AdrianRestController {
         return EventResponse.createEventResponse(eventRepo.findByUserIdsIn(Arrays.asList(individual.getId())));
     }
 
-    @RequestMapping(path = "/events-for-host.json", method = RequestMethod.POST)
-    public EventResponse eventsForHost(HttpSession session, @RequestBody HostEventRequest hostEventRequest) {
+    @RequestMapping(path = "/events-for-individual.json", method = RequestMethod.POST)
+    public EventResponse eventsForIndividual(HttpSession session, @RequestBody HostEventRequest hostEventRequest) {
         List<Event> hostedEvents = eventRepo.findByHostId(hostEventRequest.getUserId());
-        return EventResponse.createEventResponse(hostedEvents);
+        return EventResponse.createEventResponse(eventRepo.findByUserIdsIn(Arrays.asList(hostEventRequest.getUserId())));
     }
 
     @RequestMapping(path = "/create-event.json", method = RequestMethod.POST)
