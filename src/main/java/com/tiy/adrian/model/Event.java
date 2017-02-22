@@ -14,7 +14,7 @@ public class Event {
     private String name;
     private String type;
     private String host;
-    private Long hostId;
+    private String hostId;
     private String photo;
     private String location;
     private String address;
@@ -31,9 +31,9 @@ public class Event {
         testUserIds.add("777");
         testUserIds.add("888");
         testUserIds.add("999");
-        Event firstEvent = new Event("111", "HC Event 1", "TEST_TYPE_1", "Test Host 1", 444L, null, "Test Location 1", "Test Address 1", "Atlanta", "GA", 30004, new Date(), new Date(), "Test Details 1", testUserIds);
-        Event secondEvent = new Event("222", "HC Event 2", "TEST_TYPE_1", "Test Host 1", 444L, null, "Test Location 2", "Test Address 2", "Atlanta", "GA", 30004, new Date(), new Date(), "Test Details 2", testUserIds);
-        Event thirdEvent = new Event("222", "HC Event 3", "TEST_TYPE_1", "Test Host 2", 555L, null, "Test Location 3", "Test Address 3", "Atlanta", "GA", 30004, new Date(), new Date(), "Test Details 3", testUserIds);
+        Event firstEvent = new Event("111", "HC Event 1", "TEST_TYPE_1", "Test Host 1", "444", null, "Test Location 1", "Test Address 1", "Atlanta", "GA", 30004, new Date(), new Date(), "Test Details 1", testUserIds);
+        Event secondEvent = new Event("222", "HC Event 2", "TEST_TYPE_1", "Test Host 1", "444", null, "Test Location 2", "Test Address 2", "Atlanta", "GA", 30004, new Date(), new Date(), "Test Details 2", testUserIds);
+        Event thirdEvent = new Event("222", "HC Event 3", "TEST_TYPE_1", "Test Host 2", "555", null, "Test Location 3", "Test Address 3", "Atlanta", "GA", 30004, new Date(), new Date(), "Test Details 3", testUserIds);
         List<Event> events = new ArrayList<Event>();
         events.add(firstEvent);
         events.add(secondEvent);
@@ -63,7 +63,7 @@ public class Event {
         this.eventId = eventId;
     }
 
-    public Event(String id, String name, String type, String host, Long hostId, String photo, String location, String address, String city, String state, Integer zip, Date startTime, Date endTime, String details, List<String> userIds) {
+    public Event(String id, String name, String type, String host, String hostId, String photo, String location, String address, String city, String state, Integer zip, Date startTime, Date endTime, String details, List<String> userIds) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -117,11 +117,11 @@ public class Event {
         this.host = host;
     }
 
-    public Long getHostId() {
+    public String getHostId() {
         return hostId;
     }
 
-    public void setHostId(Long hostId) {
+    public void setHostId(String hostId) {
         this.hostId = hostId;
     }
 

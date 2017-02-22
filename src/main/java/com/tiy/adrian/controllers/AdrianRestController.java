@@ -54,12 +54,27 @@ public class AdrianRestController {
 
     @RequestMapping(path = "/login-organization.json", method = RequestMethod.POST)
     public OrganizationResponse loginOrganization(HttpSession session, @RequestBody LoginRequest loginRequest) {
-        return OrganizationResponse.createTestOrganizationResponse();
+        Organization organization = organizationRepo.findByEmailAndPassword(loginRequest.getEmail(), loginRequest.getPassword());
+        if (organization == null) {
+            return OrganizationResponse.createErrorOrganizationResponse("Invalid email or password", 1);
+        } else {
+            return OrganizationResponse.createOrganizationResponse(organization, eventRepo.findByUserIdsIn(Arrays.asList(organization.getId())));
+        }
     }
 
     @RequestMapping(path = "/register-organization.json", method = RequestMethod.POST)
     public OrganizationResponse registerOrganization(HttpSession session, @RequestBody RegistrationRequestOrganization registrationRequestOrganization) {
-        return OrganizationResponse.createTestOrganizationResponse();
+        Organization organization = new Organization();
+        organization.setEmail(registrationRequestOrganization.getEmail());
+        organization.setPassword(registrationRequestOrganization.getPassword());
+        organization.setAddress(registrationRequestOrganization.getAddress());
+        organization.setCity(registrationRequestOrganization.getCity());
+        organization.setName(registrationRequestOrganization.getName());
+        organization.setState(registrationRequestOrganization.getState());
+        organization.setZip(registrationRequestOrganization.getZip());
+        organizationRepo.save(organization);
+
+        return OrganizationResponse.createOrganizationResponse(organization, eventRepo.findByUserIdsIn(Arrays.asList(organization.getId())));
     }
 
     @RequestMapping(path = "/event-list.json", method = RequestMethod.GET)
@@ -84,7 +99,8 @@ public class AdrianRestController {
 
     @RequestMapping(path = "/events-for-host.json", method = RequestMethod.POST)
     public EventResponse eventsForHost(HttpSession session, @RequestBody HostEventRequest hostEventRequest) {
-        return EventResponse.creasteTestEventResponse();
+        List<Event> hostedEvents = eventRepo.findByHostId(hostEventRequest.getUserId());
+        return EventResponse.createEventResponse(hostedEvents);
     }
 
     @RequestMapping(path = "/create-event.json", method = RequestMethod.POST)
@@ -132,13 +148,22 @@ public class AdrianRestController {
         individual.setFirstName(editIndividualRequest.getFirstName());
         individual.setLastName(editIndividualRequest.getLastName());
         individual.setPassword(editIndividualRequest.getPassword());
-        individualRepo.save(individual); 
+        individualRepo.save(individual);
         return IndividualResponse.createIndividualResponse(individual, eventRepo.findByUserIdsIn(Arrays.asList(individual.getId())));
     }
 
     @RequestMapping(path = "/edit-organization.json", method = RequestMethod.POST)
     public OrganizationResponse editOrganization(HttpSession session, @RequestBody EditOrganizationRequest editOrganizationRequest) {
-        return OrganizationResponse.createTestOrganizationResponse();
+        Organization organization = organizationRepo.findOne(editOrganizationRequest.getId());
+        organization.setEmail(editOrganizationRequest.getEmail());
+        organization.setPassword(editOrganizationRequest.getPassword());
+        organization.setAddress(editOrganizationRequest.getAddress());
+        organization.setCity(editOrganizationRequest.getCity());
+        organization.setName(editOrganizationRequest.getName());
+        organization.setState(editOrganizationRequest.getState());
+        organization.setZip(editOrganizationRequest.getZip());
+
+        return OrganizationResponse.createOrganizationResponse(organization, eventRepo.findByUserIdsIn(Arrays.asList(organization.getId())));
     }
 
 }

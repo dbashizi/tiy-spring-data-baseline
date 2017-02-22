@@ -9,10 +9,9 @@ import java.util.List;
 //@Entity
 public class Organization {
     private String id;
-    private String userId;
     private String email;
     private String password;
-    private Long hostId;
+    private String hostId;
     private String name;
     private String address;
     private String city;
@@ -21,14 +20,14 @@ public class Organization {
     private List<String> eventIds = new ArrayList<String>();
 
     public static Organization createTestOrganization() {
-        Organization organization = new Organization("121", "organization1@theironyard.com", "testpassword", 444L, "Test Organization 1", "Test Address", "Atlanta", "GA", 30004, Event.getTestEventIds());
+        Organization organization = new Organization("121", "organization1@theironyard.com", "testpassword", "444", "Test Organization 1", "Test Address", "Atlanta", "GA", 30004, Event.getTestEventIds());
         return organization;
     }
 
     public Organization() {
     }
 
-    public Organization(String id, String email, String password, Long hostId, String name, String address, String city, String state, Integer zip, List<String> eventIds) {
+    public Organization(String id, String email, String password, String hostId, String name, String address, String city, String state, Integer zip, List<String> eventIds) {
         this.id = id;
         this.email = email;
         this.password = password;
@@ -39,14 +38,6 @@ public class Organization {
         this.state = state;
         this.zip = zip;
         this.eventIds = eventIds;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 
     public String getId() {
@@ -73,11 +64,11 @@ public class Organization {
         this.password = password;
     }
 
-    public Long getHostId() {
+    public String getHostId() {
         return hostId;
     }
 
-    public void setHostId(Long hostId) {
+    public void setHostId(String hostId) {
         this.hostId = hostId;
     }
 

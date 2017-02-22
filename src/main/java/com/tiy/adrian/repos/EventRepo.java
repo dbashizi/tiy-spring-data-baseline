@@ -12,4 +12,5 @@ import java.util.List;
  */
 public interface EventRepo extends MongoRepository<Event, String> {
     List<Event> findByUserIdsIn(List<String> userIds);
+    List<Event> findByHostId(String hostId);
 }

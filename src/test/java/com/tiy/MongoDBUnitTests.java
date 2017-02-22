@@ -6,9 +6,11 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.tiy.adrian.model.Event;
 import com.tiy.adrian.model.Individual;
+import com.tiy.adrian.model.Organization;
 import com.tiy.adrian.mongo.DatabaseUtils;
 import com.tiy.adrian.repos.EventRepo;
 import com.tiy.adrian.repos.IndividualRepo;
+import com.tiy.adrian.repos.OrganizationRepo;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -36,6 +38,8 @@ public class MongoDBUnitTests {
     EventRepo eventRepo;
     @Autowired
     IndividualRepo individualRepo;
+    @Autowired
+    OrganizationRepo organizationRepo;
 
     @BeforeClass
     public static void init() {
@@ -87,14 +91,18 @@ public class MongoDBUnitTests {
 
         Individual firstUser = new Individual();
         Individual secondUser = new Individual();
+        Individual hostUser = new Individual();
         individualRepo.save(firstUser);
         individualRepo.save(secondUser);
+        individualRepo.save(hostUser);
         assertNotNull(firstUser.getId());
         assertNotNull(secondUser.getId());
+        assertNotNull(hostUser.getId());
         List<String> userIds = new ArrayList<String>();
         userIds.add(firstUser.getId());
         userIds.add(secondUser.getId());
         event.setUserIds(userIds);
+        event.setHostId(hostUser.getId());
         eventRepo.save(event);
 
         List<Event> eventsByUserId = eventRepo.findByUserIdsIn(userIds);
@@ -108,8 +116,14 @@ public class MongoDBUnitTests {
         eventsByUserId = eventRepo.findByUserIdsIn(userIds);
         assertEquals(2, eventsByUserId.size());
 
+        List<Event> hostedEvents = eventRepo.findByHostId(hostUser.getId());
+        assertNotNull(hostedEvents);
+        assertEquals(1, hostedEvents.size());
+        assertEquals(event.getId(), hostedEvents.get(0).getId());
+
         individualRepo.delete(firstUser);
         individualRepo.delete(secondUser);
+        individualRepo.delete(hostUser);
         eventRepo.delete(event);
         eventRepo.delete(secondEvent);
 
@@ -136,5 +150,25 @@ public class MongoDBUnitTests {
 
         individualRepo.delete(testIndividual);
         assertEquals(countBefore, individualRepo.count());
+    }
+
+    @Test
+    public void testOrganization() {
+        Organization testOrganization = new Organization();
+        testOrganization.setEmail("tester@tiy.com");
+        testOrganization.setPassword("password");
+
+        long countBefore = organizationRepo.count();
+        organizationRepo.save(testOrganization);
+
+        assertEquals(countBefore +1, organizationRepo.count());
+        assertNotNull(testOrganization.getId());
+
+        Organization retrievedInd = organizationRepo.findByEmailAndPassword(testOrganization.getEmail(), testOrganization.getPassword());
+        assertNotNull(retrievedInd);
+        assertEquals(testOrganization.getId(), retrievedInd.getId());
+
+        organizationRepo.delete(testOrganization);
+        assertEquals(countBefore, organizationRepo.count());
     }
 }

@@ -4,16 +4,16 @@ package com.tiy.adrian.model;
  * Created by dbash on 2/10/2017.
  */
 public class HostEventRequest {
-    private Long userId;
+    private String userId;
 
     public HostEventRequest() {
     }
 
-    public Long getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 }

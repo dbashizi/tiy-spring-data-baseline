@@ -1,13 +1,10 @@
 package com.tiy.adrian.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by dbash on 2/10/2017.
  */
 public class EditOrganizationRequest {
-    private Long userId;
+    private String id;
     private String email;
     private String password;
     private String name;
@@ -19,8 +16,8 @@ public class EditOrganizationRequest {
     public EditOrganizationRequest() {
     }
 
-    public EditOrganizationRequest(Long userId, String email, String password, String name, String address, String city, String state, Integer zip) {
-        this.userId = userId;
+    public EditOrganizationRequest(String id, String email, String password, String name, String address, String city, String state, Integer zip) {
+        this.id = id;
         this.email = email;
         this.password = password;
         this.name = name;
@@ -30,12 +27,12 @@ public class EditOrganizationRequest {
         this.zip = zip;
     }
 
-    public Long getUserId() {
-        return userId;
+    public String getId() {
+        return id;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getEmail() {
