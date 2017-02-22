@@ -106,6 +106,8 @@ public class AdrianRestController {
     @RequestMapping(path = "/create-event.json", method = RequestMethod.POST)
     public EventResponse createEvent(HttpSession session, @RequestBody Event event) {
 //        return EventResponse.creasteTestEventResponse();
+        System.out.println("Start time: " + event.getStartTime().toString());
+        System.out.println("End time: " + event.getEndTime().toString());
         eventRepo.save(event);
         return EventResponse.createEventResponse(eventRepo.findAll());
     }
