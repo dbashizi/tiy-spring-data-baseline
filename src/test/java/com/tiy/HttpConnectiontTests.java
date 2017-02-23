@@ -21,7 +21,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -31,6 +33,14 @@ import static org.junit.Assert.assertNotNull;
  * Created by dbash on 2/8/2017.
  */
 public class HttpConnectiontTests {
+
+    @Test
+    public void testDateConversion() {
+        Date testDate = Date.from(Instant.ofEpochMilli(1488049252000L));
+        Date secondTestDate = Date.from(Instant.ofEpochMilli(1488056402000L));
+        System.out.println(testDate.toString());
+        System.out.println(secondTestDate.toString());
+    }
 
     @Test
     public void testSendTextMessages() {
